@@ -6,12 +6,34 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RadioTest {
 
-    @Test
-    public void shouldMaxStation(){
-        Radio radio = new Radio(10);
 
-        assertEquals(10, radio.getMaxStation());
+    @Test
+    public void maxStation() {
+        Radio radio = new Radio(4);
+
+        assertEquals(4, radio.getMaxStation());
     }
+
+
+    @Test
+    public void setTheDesiredStation() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(5);
+        assertEquals(5, radio.getCurrentStation());
+    }
+
+    @Test
+    public void allValue() {
+        Radio radio = new Radio(2, 0,10,9,0,100);
+
+        assertEquals(2, radio.getCurrentStation());
+        assertEquals(0, radio.getMinStation());
+        assertEquals(10, radio.getMaxStation());
+        assertEquals(9, radio.getCurrentVolume());
+        assertEquals(0, radio.getMinVolume());
+        assertEquals(100, radio.getMaxVolume());
+    }
+
 
     @Test
     public void changeNextStation() {
@@ -19,6 +41,16 @@ public class RadioTest {
 
         radio.nextStation();
         assertEquals(6, radio.getCurrentStation());
+    }
+
+    @Test
+    public void minMaxStationValue() {
+        Radio radio = new Radio();
+
+        radio.setMaxStation(10);
+        radio.setMinStation(0);
+        assertEquals(10, radio.getMaxStation());
+        assertEquals(0, radio.getMinStation());
     }
 
     @Test
@@ -62,8 +94,21 @@ public class RadioTest {
     }
 
     @Test
+    public void volumeValues() {
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(8);
+        radio.setMinVolume(0);
+        radio.setMaxVolume(100);
+
+        assertEquals(8, radio.getCurrentVolume());
+        assertEquals(0, radio.getMinVolume());
+        assertEquals(100, radio.getMaxVolume());
+    }
+
+    @Test
     public void volumeIncrease() {
-        Radio radio = new Radio(4, 0, 100);
+        Radio radio = new Radio(4,0,100);
 
         radio.plusVolume();
         assertEquals(5, radio.getCurrentVolume());
@@ -78,7 +123,7 @@ public class RadioTest {
     }
 
     @Test
-    public void volumeIncreaseOverMax() {
+    public void increaseOverMax() {
         Radio radio = new Radio();
 
         radio.setCurrentVolume(109);
@@ -86,11 +131,20 @@ public class RadioTest {
     }
 
     @Test
-    public void volumeDecreaseUnderMin() {
+    public void decreaseUnderMin() {
         Radio radio = new Radio();
 
         radio.setCurrentVolume(-1);
         radio.minusVolume();
         assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void increaseFromMaxVolume() {
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(100);
+        radio.plusVolume();
+        assertEquals(100, radio.getCurrentVolume());
     }
 }
