@@ -1,47 +1,46 @@
 package ru.netology.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Radio {
 
     private int currentStation; // текущая радиостанция
-    private int firstStation;
-    private int lastStation = 9;
+    private int minStation;
+    private int maxStation = 10;
+
     private int currentVolume; // текущая громкость звука
     private int minVolume;
-    private int maxVolume = 10;
+    private int maxVolume = 100;
 
 
-    public int getCurrentVolume() {
-        return currentVolume;
+    public Radio(int maxStation) {
+        this.maxStation = maxStation;
     }
 
-    public void setCurrentVolume(int currentVolume) {
+    public Radio(int currentStation, int maxStation) {
+        this.currentStation = currentStation;
+        this.maxStation = maxStation;
+    }
 
-        if(currentVolume > maxVolume) {
-            this.currentVolume = maxVolume;
-            return;
-        }
-
-        if(currentVolume < minVolume) {
-            this.currentVolume = minVolume;
-            return;
-        }
+    public Radio(int currentVolume, int minVolume, int maxVolume) {
         this.currentVolume = currentVolume;
-    }
-
-    public int getMinVolume() {
-        return minVolume;
-    }
-
-    public void setMinVolume(int minVolume) {
         this.minVolume = minVolume;
-    }
-
-    public int getMaxVolume() {
-        return maxVolume;
-    }
-
-    public void setMaxVolume(int maxVolume) {
         this.maxVolume = maxVolume;
+    }
+
+
+    public int getMaxStation() {
+        return maxStation;
+    }
+
+    public int getMinStation() {
+        return minStation;
     }
 
     public int getCurrentStation() {
@@ -50,39 +49,21 @@ public class Radio {
 
     public void setCurrentStation(int currentStation) {
 
-        if (currentStation < firstStation) {
-            this.currentStation = firstStation;
+        if (currentStation < minStation) {
+            this.currentStation = minStation;
             return;
         }
-        if (currentStation > lastStation) {
-            this.currentStation = lastStation;
+        if (currentStation > maxStation) {
+            this.currentStation = maxStation;
             return;
         }
-
         this.currentStation = currentStation;
     }
 
 
-    public int getFirstStation() {
-        return firstStation;
-    }
-
-    public void setFirstStation(int firstStation) {
-        this.firstStation = firstStation;
-    }
-
-    public int getLastStation() {
-        return lastStation;
-    }
-
-    public void setLastStation(int lastStation) {
-        this.lastStation = lastStation;
-    }
-
-
     public void nextStation() {
-        if (currentStation == lastStation) {
-            this.currentStation = firstStation;
+        if (currentStation == maxStation) {
+            this.currentStation = minStation;
             return;
         }
         currentStation++;
@@ -90,13 +71,31 @@ public class Radio {
 
 
     public void prevStation() {
-        if (currentStation == firstStation) {
-            this.currentStation = lastStation;
+        if (currentStation == minStation) {
+            this.currentStation = maxStation;
             return;
         }
         currentStation--;
     }
 
+
+    public int getCurrentVolume() {
+        return currentVolume;
+    }
+
+    public void setCurrentVolume(int currentVolume) {
+
+        if (currentVolume > maxVolume) {
+            this.currentVolume = maxVolume;
+            return;
+        }
+
+        if (currentVolume < minVolume) {
+            this.currentVolume = minVolume;
+            return;
+        }
+        this.currentVolume = currentVolume;
+    }
 
     public void plusVolume() {
         if (currentVolume == maxVolume) {
@@ -105,7 +104,6 @@ public class Radio {
         currentVolume++;
     }
 
-
     public void minusVolume() {
         if (currentVolume == minVolume) {
             return;
@@ -113,3 +111,4 @@ public class Radio {
         currentVolume--;
     }
 }
+
