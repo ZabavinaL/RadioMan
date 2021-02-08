@@ -151,4 +151,20 @@ public class RadioTest {
         radio.minusVolume();
         assertEquals(0, radio.getCurrentVolume());
     }
+
+    @Test
+    public void toSetTheVolumeNumberMin() {
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(-1);
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void toSetTheVolumeNumberMax() {
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(110);
+        assertEquals(100, radio.getCurrentVolume());
+    }
 }
